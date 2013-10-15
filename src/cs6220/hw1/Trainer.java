@@ -9,11 +9,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 import weka.classifiers.Classifier;
-import weka.classifiers.functions.VotedPerceptron;
-import weka.classifiers.rules.DecisionTable;
-import weka.classifiers.trees.BFTree;
 import weka.classifiers.trees.J48graft;
-import weka.classifiers.trees.REPTree;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -43,8 +39,8 @@ public class Trainer {
 	}
 
 	public static void convertFromTxtToCSV() throws IOException {
-		File file = new File(Constant.TRAININGSETTXT);
-		File output = new File(Constant.TRAINCSV);
+		File file = new File(System.getProperty("user.dir")+"/"+Constant.TRAININGSETTXT);
+		File output = new File(System.getProperty("user.dir")+"/"+Constant.TRAINCSV);
 		parseFile(file, output);
 	}
 
@@ -70,7 +66,7 @@ public class Trainer {
 
 	}
 
-	private static void trim(String[] strs) {
+	public static void trim(String[] strs) {
 		for (int i = 0; i < strs.length; i++) {
 			strs[i] = strs[i].trim();
 		}
@@ -78,41 +74,27 @@ public class Trainer {
 
 	public static void convertFromCSVToArff() throws IOException {
 		CSVLoader loader = new CSVLoader();
-		loader.setSource(new File(Constant.TRAINCSV));
+		loader.setSource(new File(System.getProperty("user.dir")+"/"+Constant.TRAINCSV));
 		Instances data = loader.getDataSet();
 
 		// save ARFF
 		ArffSaver saver = new ArffSaver();
 		saver.setInstances(data);
-		saver.setFile(new File(Constant.TRAINARFF));
+		saver.setFile(new File(System.getProperty("user.dir")+"/"+Constant.TRAINARFF));
 		saver.writeBatch();
 	}
 
-	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		if(args.length!=2){
-			System.out.println("syntax: <run_script> <input_test_file> <output_file>");
-			System.exit(1);
-		}
-		String input = args[0];
-		String output = args[1];
-		
-		convertFromTxtToCSV();
-		convertFromCSVToArff();
-		buildClassifier(input,output);
-		
 
-	}
 	
-	public static void buildClassifier(String pathToTest, String pathToResult) throws Exception{
+	public static void buildClassifier(String pathToTest, String pathToResult,Classifier cls) throws Exception{
 
 		/* train arff test */
 		 ArffLoader loader = new ArffLoader();
-		 loader.setFile(new File(Constant.TRAINARFF));
+		 loader.setFile(new File(System.getProperty("user.dir")+"/"+Constant.TRAINARFF));
 		 Instances structure = loader.getDataSet();
 		 
 		/* arff test path*/
-		File output = new File(Constant.LESSTESTARFF);
+		File output = new File(System.getProperty("user.dir")+"/"+Constant.TESTARFF);
 		FileWriter fw = new FileWriter(output);
 		BufferedWriter bw = new BufferedWriter(fw);
 		
@@ -150,26 +132,29 @@ public class Trainer {
 		br.close();
 		
 		 structure.setClassIndex(structure.numAttributes() - 1);
-		 Classifier cls = new DecisionTable();
+		 //set implementation of a classifier
 		 cls.buildClassifier(structure);
 		 
 		 ArffLoader test = new ArffLoader();
-		 test.setFile(new File(Constant.LESSTESTARFF));
+		 test.setFile(new File(System.getProperty("user.dir")+"/"+Constant.TESTARFF));
 		 Instances teststructure = test.getDataSet();
 		 teststructure.setClassIndex(teststructure.numAttributes()-1);
 		 
 		 @SuppressWarnings("unchecked")
-		Enumeration<Instance> e =teststructure.enumerateInstances();
-		 resutlBW.append("Category");
+		 Enumeration<Instance> e =teststructure.enumerateInstances();
+		 // resutlBW.append("Category");
+		 boolean isFirstLine=true;
 		 while (e.hasMoreElements()) {
 			Instance instance = (Instance) e.nextElement();
-		//	System.out.print(cls.distributionForInstance(instance)[0]+":"+cls.classifyInstance(instance));
+			String prefix="\n";
+			if(isFirstLine){
+			   prefix="";
+			   isFirstLine=false;
+			}
 			if(cls.classifyInstance(instance)==0){
-				//System.out.println("\n"+"<=50K");
-				resutlBW.append("\n"+"<=50K");
+				resutlBW.append(prefix+"<=50K");
 			}else{
-//				System.out.println("\n"+">50K");
-				resutlBW.append("\n"+">50K");
+				resutlBW.append(prefix+">50K");
 			}
 			
 		}
@@ -179,3 +164,4 @@ public class Trainer {
 		 
 	}
 }
+
