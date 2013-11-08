@@ -1,0 +1,94 @@
+<!--
+You are free to copy and use this sample in accordance with the terms of the
+Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Data Mining Project</title>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+<script type="text/javascript">
+      function drawVisualization() {
+        // Create and populate the data table.
+        var data = google.visualization.arrayToDataTable([
+          ['Subreddit', 'Times'],
+          ['funny',12545],
+      ['pics',9056],
+      ['WTF',4001],
+      ['gifs',3776],
+      ['GifSound',1760],
+      ['aww',1611],
+      ['gaming',1206],
+      ['atheism',1007],
+      ['reddit.com',736],
+      ['reactiongifs',630],
+      ['gif',593],
+      ['trees',432],
+      ['AdviceAnimals',369],
+      ['woahdude',156],
+      ['photoshopbattles',137],
+      ['fffffffuuuuuuuuuuuu',110],
+      ['4chan',104],
+      ['HIFW',98],
+      ['pokemon',93],
+      ['movies',85],
+      ['space',83],
+      ['offbeat',81],
+      ['geek',78],
+      ['wallpapers',76],
+      ['mildlyinteresting',71],
+      ['PerfectTiming',67],
+      ['KarmaConspiracy',66],
+      ['LeagueOfMemes',63],
+      ['breakingbad',49],
+      ['firstworldanarchists',48],
+      ['creepy',46],
+      ['wallpaper',44],
+      ['EarthPorn',40],
+      ['batman',36],
+      ['HistoryPorn',33],
+      ['cats',32],
+      ['Images',29],
+      ['upvotegifs',29],
+      ['Music',27],
+      ['vertical',25],
+      ['awwwtf',25],
+      ['comics',23],
+      ['arresteddevelopment',22],
+      ['sandy',21],
+      ['Punny',21],
+      ['facepalm',21],
+      ['toosoon',21],
+      
+        ]);
+      
+        // Create and draw the visualization.
+        new google.visualization.ColumnChart(document.getElementById('visualization')).
+            draw(data,
+                 {title:"Number of distinct image per subreddit",
+                  width:800, height:400,
+                  hAxis: {title: "subreddit"}}
+            );
+
+						  new google.visualization.ColumnChart(document.getElementById('visualization1')).
+			            draw(data,
+			                 {title:"Number of distinct image per subreddit",
+			                  width:800, height:400,
+			                  hAxis: {title: "subreddit"}}
+			            );
+      }
+      
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+</head>
+<body style="font-family: Arial; border: 0 none;">
+	<div id="visualization" style="width: 800px; height: 400px;"></div>
+	<div id="visualization1" style="width: 800px; height: 400px;"></div>
+</body>
+</html>

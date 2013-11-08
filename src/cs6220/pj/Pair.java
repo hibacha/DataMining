@@ -11,7 +11,7 @@ public class Pair implements Comparable<Pair>{
 	
 	@Override
 	public String toString() {
-		return "Pair [name=" + name + ", number=" + number + "]";
+		return "['"+name + "'," + number + "],";
 	}
 
 	public String getName() {
@@ -41,7 +41,7 @@ public class Pair implements Comparable<Pair>{
 	@Override
 	public int compareTo(Pair o) {
 		// TODO Auto-generated method stub
-		return this.getNumber()-o.getNumber();
+		return (this.getNumber()-o.getNumber())*-1;
 	}
 
 }

@@ -16,7 +16,9 @@ public class Converter {
 
 	private static String READ_PATH = "/Users/zhouyf/Dropbox/DataMining/reddit/normalizedReddit.csv";
     private  Hashtable<String,Integer> subreddit2submissionsTimesTable=new Hashtable<String, Integer>();
-    private  Hashtable<String,Set<Integer>> subreddit2ImageSetTable=new Hashtable<String, Set<Integer>>();
+    private  Hashtable<String,Integer> image2submissionsTimesTable=new Hashtable<String, Integer>();
+    private  Hashtable<String,Set<String>> subreddit2ImageSetTable=new Hashtable<String, Set<String>>();
+    private  Hashtable<String,Set<String>> image2SubredditSetTable=new Hashtable<String, Set<String>>();
     
 	/**
 	 * @param args
@@ -25,8 +27,7 @@ public class Converter {
 		// TODO Auto-generated method stub
 		Converter c = new Converter();
 		c.readFromGivenURL(READ_PATH);
-		//c.mergeSubmissionToList();
-		c.mergeImageToList();
+		
 	}
 
 	private void readFromGivenURL(String url) {
@@ -47,22 +48,33 @@ public class Converter {
 			count++;
 			String[] values = str.split(",", 11);
 			if (count > 1) {
-				statSubmissionTimesPerSubreddit(values);
-				statDistinctImageTimesPerSubreddit(values);
+				statSubmissionTimesPerSubreddit(values,6,subreddit2submissionsTimesTable);
+				statSubmissionTimesPerSubreddit(values,0,image2submissionsTimesTable);
+				statDistinctImageTimesPerSubreddit(values,6,0,subreddit2ImageSetTable);
+				statDistinctImageTimesPerSubreddit(values,0,6,image2SubredditSetTable);
 			}
 		}
+//		System.out.println("************");
+//		mergeSubmissionToList(subreddit2submissionsTimesTable);
+//		System.out.println("************");
+//		mergeSubmissionToList(image2submissionsTimesTable);
+		System.out.println("************");
+		mergeImageToList(subreddit2ImageSetTable);
+		System.out.println("************");
+		mergeImageToList(image2SubredditSetTable);
+		
 	}
 
-	private void statDistinctImageTimesPerSubreddit(String[] values) {
-		String key=values[6].trim();
-		if(subreddit2ImageSetTable.get(key)==null){
-			Set<Integer> imageSet = new HashSet<Integer>();
-			Integer imageId= Integer.parseInt(values[0]);
+	private void statDistinctImageTimesPerSubreddit(String[] values, int baseIndex, int aggregationIndex, Hashtable<String,Set<String>> table) {
+		String key=values[baseIndex].trim();
+		if(table.get(key)==null){
+			Set<String> imageSet = new HashSet<String>();
+			String imageId= values[aggregationIndex];
 			imageSet.add(imageId);
-			subreddit2ImageSetTable.put(key, imageSet);
+			table.put(key, imageSet);
 		}else{
-			Integer imageId= Integer.parseInt(values[0]);
-			Set<Integer> imageSet = subreddit2ImageSetTable.get(key);
+			String imageId= values[aggregationIndex];
+			Set<String> imageSet = table.get(key);
 			if(!imageSet.contains(imageId)){
 				imageSet.add(imageId);
 			}
@@ -70,42 +82,40 @@ public class Converter {
 		
 	}
 
-	private void statSubmissionTimesPerSubreddit(String[] values) {
-		String key=values[6].trim();
-		Integer submissionsTimes = subreddit2submissionsTimesTable.get(key);
+	private void statSubmissionTimesPerSubreddit(String[] values,int fieldIndex,Hashtable<String,Integer> table) {
+		String key=values[fieldIndex].trim();
+		Integer submissionsTimes = table.get(key);
 		if(submissionsTimes==null){
-		   subreddit2submissionsTimesTable.put(key, 1);
+			table.put(key, 1);
 		}
 		else{
-		   subreddit2submissionsTimesTable.put(key,subreddit2submissionsTimesTable.get(key)+1);
+			table.put(key,table.get(key)+1);
 		}
 	}
 
-	private void mergeImageToList(){
-		Enumeration<String> enumerator = subreddit2ImageSetTable.keys();
+	private void mergeImageToList(Hashtable<String,Set<String>> table){
+		Enumeration<String> enumerator = table.keys();
 		List<Pair> list=new ArrayList<Pair>();
 		while(enumerator.hasMoreElements()){
 		  String key=enumerator.nextElement();
-		  Set<Integer> imageSet = subreddit2ImageSetTable.get(key);
+		  Set<String> imageSet = table.get(key);
 		  list.add(new Pair(key,imageSet.size()));
 		}
 		showStat(list);
 	}
-	private void mergeSubmissionToList(){
-		Enumeration<String> enumerator= subreddit2submissionsTimesTable.keys();
+	private void mergeSubmissionToList(Hashtable<String,Integer> table){
+		Enumeration<String> enumerator= table.keys();
 		List<Pair> list=new ArrayList<Pair>();
 		while(enumerator.hasMoreElements()){
 			String key=enumerator.nextElement();
-			int number = subreddit2submissionsTimesTable.get(key); 
+			int number = table.get(key); 
 			list.add(new Pair(key,number));
 		}
 		showStat(list);
 		
 	}
 	private void showStat(List<Pair> list) {
-		
 		Collections.sort(list);
-		
 		for(Pair pair:list){
 			System.out.println(pair);
 		}
