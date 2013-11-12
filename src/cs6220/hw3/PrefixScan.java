@@ -44,6 +44,7 @@ public class PrefixScan {
 				cloned.append(new Event(candidate));
 				newpjDB.setPrefix(cloned);
 			}
+			System.out.println(newpjDB);
 			return newpjDB;
 		}
 		

@@ -78,6 +78,9 @@ public class Event {
 		 }else{
 			 if(items.size()>1){
 				
+				 if(prefixLast.contains(candidate)){
+					 return -1;
+				 }
 				 if(sublist.containsAll(prefixLast)&&sublist.contains(candidate)){
 					 int indexOfCandidate=sublist.indexOf(candidate)+itemIndex;
 					 if(indexOfCandidate<items.size()-1&&indexOfCandidate!=-1)
