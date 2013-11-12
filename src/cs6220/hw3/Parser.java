@@ -18,7 +18,7 @@ public class Parser {
 	public static final String PATH="/Users/zhouyf/Dropbox/DataMining/hw3/little.data";
 	
 	public static void main(String[] args) {
-		readFromGivenURL();
+		generateDBFromFile();
 	}
 	
 	public static Sequence convert2SeqObj(String line) {
@@ -34,7 +34,7 @@ public class Parser {
 		return sq;
 	}
 
-	public static List<Sequence> readFromGivenURL() {
+	public static List<Sequence> generateDBFromFile() {
 		File file = new File(PATH);
 		List<Sequence> seqDataBase=null;
 		try {

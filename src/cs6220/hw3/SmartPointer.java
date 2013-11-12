@@ -15,5 +15,10 @@ public class SmartPointer {
 	public void setItemIndex(Integer itemIndex) {
 		this.itemIndex = itemIndex;
 	}
+	@Override
+	public String toString() {
+		return "SmartPointer [eventIndex=" + eventIndex + ", itemIndex="
+				+ itemIndex + "]\n";
+	}
 	
 }

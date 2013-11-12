@@ -1,11 +1,15 @@
 package cs6220.hw3;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sequence {
 	
-	private List<Event> events;
+	private List<Event> events=new ArrayList<Event>();
 	private int id;
+	
+	public Sequence() {
+	}
 	
 	public Sequence(List<Event> loe) {
 		events=loe;
@@ -18,23 +22,62 @@ public class Sequence {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public boolean isEventIn(Short candidate, SmartPointer spointer){
-		List<Event> sublist =events.subList(spointer.getEventIndex(), events.size());
-		for(Event e:sublist){
-			if(e.isEventIn(candidate, spointer.getItemIndex()))
-				return true;
+	
+	public Sequence clone(){
+		List<Event> list=new ArrayList<Event>();
+		for(Event s: events){
+			list.add(s.clone());
 		}
-		return false;
+		Sequence clone=new Sequence(list);
+		return clone;
+	}
+	public void append(Event e){
+		events.add(e);
+	}
+	public void mergeCandidate(Short candidate){
+		events.get(events.size()-1).mergeCandidate(candidate);
 	}
 	
-	public boolean isAssembleIn(Short prefixLast, Short candidate, SmartPointer spointer){
+	public Event getLastEvent(){
+		return events.get(events.size()-1);
+	}
+	
+	public SmartPointer isEventIn(Short candidate, SmartPointer spointer){
 		List<Event> sublist =events.subList(spointer.getEventIndex(), events.size());
-		for(Event e:sublist){
-			if(e.isAssembleIn(prefixLast, candidate, spointer.getItemIndex()))
-				return true;
+		SmartPointer newPointer=new SmartPointer();
+		for(int i=0;i<sublist.size();i++){
+			Event e= sublist.get(i);
+			int code =e.isEventIn(candidate, i==0?spointer.getItemIndex():0);
+			if(code==0){
+				newPointer.setEventIndex(spointer.getEventIndex()+i+1);
+			  	 newPointer.setItemIndex(0);
+			  	 return newPointer;
+			}else if(code>0){
+			     newPointer.setEventIndex(spointer.getEventIndex()+i);
+			     newPointer.setItemIndex(code);
+			     return newPointer;
+		    }
 		}
-		return false;
+		return null;
+	}
+	
+	public SmartPointer isAssembleIn(List<Short> prefixLast, Short candidate, SmartPointer spointer){
+		List<Event> sublist =events.subList(spointer.getEventIndex(), events.size());
+		SmartPointer newPointer=new SmartPointer();
+		for(int i=0;i<sublist.size();i++){
+			Event e= sublist.get(i);
+			int code =e.isAssembleIn(prefixLast,candidate, i==0?spointer.getItemIndex():0);
+			if(code==0){
+				newPointer.setEventIndex(spointer.getEventIndex()+i+1);
+			  	 newPointer.setItemIndex(0);
+			  	 return newPointer;
+			}else if(code>0){
+			     newPointer.setEventIndex(spointer.getEventIndex()+i);
+			     newPointer.setItemIndex(code);
+			     return newPointer;
+		    }
+		}
+		return null;
 	}
 	
 	@Override

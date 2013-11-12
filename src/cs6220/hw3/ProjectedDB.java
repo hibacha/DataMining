@@ -1,11 +1,28 @@
 package cs6220.hw3;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ProjectedDB {
 	
-	private List<Event> prefix;
+	@Override
+	public String toString() {
+		return "ProjectedDB [prefix=" + prefix + ", pjDB=" + pjDB + "]";
+	}
+
+	private Sequence prefix=new Sequence();
+
+	
+	
+	public Sequence getPrefix() {
+		return prefix;
+	}
+
+	public void setPrefix(Sequence prefix) {
+		this.prefix = prefix;
+	}
+
 	public HashMap<Integer, SmartPointer> getPjDB() {
 		return pjDB;
 	}
