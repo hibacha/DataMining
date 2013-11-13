@@ -30,10 +30,10 @@ public class Parser {
 			listOfNumber.add(Short.valueOf(line.substring(m.start(), m.end())));
 		}
 		Sequence sq = parse(listOfNumber);
-		System.out.println(sq);
 		return sq;
 	}
 
+	
 	public static List<Sequence> generateDBFromFile() {
 		File file = new File(PATH);
 		List<Sequence> seqDataBase=null;

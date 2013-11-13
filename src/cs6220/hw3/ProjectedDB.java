@@ -1,14 +1,13 @@
 package cs6220.hw3;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ProjectedDB {
 	
 	@Override
 	public String toString() {
-		return "ProjectedDB [prefix=" + prefix + ", pjDB=" + pjDB + "]";
+//		return "ProjectedDB [prefix=" + prefix + ", \n pjDB=" + pjDB + "]";
+		return "prefix=" + prefix ;
 	}
 
 	private Sequence prefix=new Sequence();

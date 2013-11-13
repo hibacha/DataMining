@@ -66,9 +66,11 @@ public class Sequence {
 		SmartPointer newPointer=new SmartPointer();
 		for(int i=0;i<sublist.size();i++){
 			Event e= sublist.get(i);
+			//only the first event needs the offset for item index
 			int code =e.isAssembleIn(prefixLast,candidate, i==0?spointer.getItemIndex():0);
+			//TODO
 			if(code==0){
-				newPointer.setEventIndex(spointer.getEventIndex()+i+1);
+				 newPointer.setEventIndex(spointer.getEventIndex()+i+1);
 			  	 newPointer.setItemIndex(0);
 			  	 return newPointer;
 			}else if(code>0){
