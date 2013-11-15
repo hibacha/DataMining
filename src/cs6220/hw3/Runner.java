@@ -1,5 +1,5 @@
 package cs6220.hw3;
-
+//lowpfm
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,7 +28,7 @@ public class Runner {
 //		long size = SeqReader.getMaxLineNumber()+1;
 	    size = originalDB.size();
 	    System.out.println(size);
-		min_suppport_count=0.01*size;
+		min_suppport_count=0.5*size;
 		
 		
 		ProjectedDB initProjectedDB=initPjDB(size);
