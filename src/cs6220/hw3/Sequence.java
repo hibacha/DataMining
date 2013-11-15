@@ -1,12 +1,15 @@
 package cs6220.hw3;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Sequence {
 	
 	private List<Event> events=new ArrayList<Event>();
 	private int id;
+	private Map<Short,ArrayList<SmartPointer>> hash = new HashMap<Short,ArrayList<SmartPointer>>();
 	
 	public Sequence() {
 	}
