@@ -14,6 +14,7 @@ public class Sequence {
 	public Sequence() {
 	}
 	
+	
 	public Sequence(List<Event> loe) {
 		events=loe;
 	}

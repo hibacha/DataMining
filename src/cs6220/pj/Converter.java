@@ -54,13 +54,13 @@ public class Converter {
 				statDistinctImageTimesPerSubreddit(values,0,6,image2SubredditSetTable);
 			}
 		}
-//		System.out.println("************");
-//		mergeSubmissionToList(subreddit2submissionsTimesTable);
-//		System.out.println("************");
-//		mergeSubmissionToList(image2submissionsTimesTable);
-		System.out.println("************");
+		System.out.println("@@@@@@@@@@@[subreddit,submissionTimes]");
+		mergeSubmissionToList(subreddit2submissionsTimesTable);
+		System.out.println("@@@@@@@@@@@[image,submissionTimes]");
+		mergeSubmissionToList(image2submissionsTimesTable);
+		System.out.println("@@@@@@@@@@@[subreddit,dictinctImageTimes]");
 		mergeImageToList(subreddit2ImageSetTable);
-		System.out.println("************");
+		System.out.println("@@@@@@@@@@@[image, different subreddit Number]");
 		mergeImageToList(image2SubredditSetTable);
 		
 	}
