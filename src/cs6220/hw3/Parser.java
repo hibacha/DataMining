@@ -15,7 +15,9 @@ public class Parser {
 	/**
 	 * @param args
 	 */
-	public static final String PATH="/Users/zhouyf/Dropbox/DataMining/hw3/little.data";
+	public static final String PATH="/Users/zhouyf/Dropbox/DataMining/hw3/truncate2.data";
+//	public static final String PATH="/Users/zhouyf/Dropbox/DataMining/hw3/500K5K20_a.data";
+//	public static final String PATH="/Users/zhouyf/Dropbox/DataMining/hw3/little.data";
 	
 	public static void main(String[] args) {
 		generateDBFromFile();
@@ -57,7 +59,9 @@ public class Parser {
 			count++;
 			Sequence sq=convert2SeqObj(str);
 			seqDataBase.add(sq);
-			//if(count>10)break;
+			if(count%10000==0){
+				System.out.println(count);
+			};
 		}
 		return seqDataBase;
 	}

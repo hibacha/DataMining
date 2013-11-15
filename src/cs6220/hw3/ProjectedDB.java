@@ -7,13 +7,21 @@ public class ProjectedDB {
 	@Override
 	public String toString() {
 //		return "ProjectedDB [prefix=" + prefix + ", \n pjDB=" + pjDB + "]";
-		return "prefix=" + prefix ;
+		return "prefix=" + prefix +" "+relativeSupport;
 	}
 
 	private Sequence prefix=new Sequence();
 
+	private double relativeSupport=0;
 	
-	
+	public double getRelativeSupport() {
+		return relativeSupport;
+	}
+
+	public void setRelativeSupport(double relativeSupport) {
+		this.relativeSupport = relativeSupport;
+	}
+
 	public Sequence getPrefix() {
 		return prefix;
 	}

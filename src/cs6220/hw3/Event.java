@@ -103,7 +103,8 @@ public class Event {
 		StringBuilder sb=new StringBuilder();
 		sb.append("(");
 		for(Short e:items){
-			sb.append(String.copyValueOf(Character.toChars(e)).toLowerCase()).append(",");
+		//	sb.append(String.copyValueOf(Character.toChars(e)).toLowerCase()).append(",");
+			sb.append(e).append(",");
 		}
 		sb.setCharAt(sb.length()-1, ')');
 		return sb.toString();
